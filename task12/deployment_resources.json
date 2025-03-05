@@ -46,7 +46,7 @@
     "resource_type": "iam_role",
     "tags": {}
   },
-  "simple-booking-userpool": {
+  "${booking_userpool}": {
     "resource_type": "cognito_idp",
     "password_policy": {
       "minimum_length": 12,
@@ -71,7 +71,7 @@
     },
     "tags": {}
   },
-  "Tables": {
+  "${tables_table}": {
     "resource_type": "dynamodb_table",
     "hash_key_name": "id",
     "hash_key_type": "N",
@@ -81,7 +81,7 @@
     "autoscaling": [],
     "tags": {}
   },
-  "Reservations": {
+  "${reservations_table}": {
     "resource_type": "dynamodb_table",
     "hash_key_name": "id",
     "hash_key_type": "S",
@@ -93,7 +93,6 @@
   },
   "api-ui-hoster": {
     "resource_type": "s3_bucket",
-    "acl": "public-read",
     "cors": [],
     "policy": {
       "Version": "2012-10-17",
@@ -107,15 +106,16 @@
           ],
           "Resource": [
             "arn:aws:s3:::api-ui-hoster/*"
-          ]
+          ],
+          "Condition": {
+            "IpAddress": {
+              "aws:SourceIp": [
+                "18.197.177.98/32"
+              ]
+            }
+          }
         }
       ]
-    },
-    "public_access_block": {
-      "block_public_acls": true,
-      "ignore_public_acls": true,
-      "block_public_policy": true,
-      "restrict_public_buckets": true
     },
     "tags": {},
     "website_hosting": {
